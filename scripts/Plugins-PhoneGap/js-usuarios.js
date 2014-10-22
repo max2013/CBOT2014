@@ -47,7 +47,7 @@ var usuarios = {
                if(data.mensagem !== 'fail')
                {
                    
-                  sessionStorage.userlogado = 'true';
+                    sessionStorage.userlogado = 'true';
                     $.each(data.mensagem, function(i, index) { 
 
 
@@ -67,7 +67,12 @@ var usuarios = {
                         campos = implode(", ", arrDadosCampos);
                         values = implode(", ", arrDadosValues);
                         
-                        antsDb.handleInsert({tabela:'tb_participantes', txDb:tx, field:campos, value:values});
+                        db.transaction(function(tx) {
+                            
+                             antsDb.handleInsert({tabela:'tb_participantes', txDb:tx, field:campos, value:values});
+                             window.location = 'homepage.html';
+                        });
+                       
 
 
                     });
