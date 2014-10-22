@@ -28,8 +28,7 @@ var usuarios = {
     
     handleDeleteError:function(tx, results)
     {
-        
-        alert('delete error')
+        alert('Houve um erro ao remover os dados!');
     },
     
     handleGetDataParticipante:function()
@@ -43,8 +42,7 @@ var usuarios = {
             $.post(formURL+'handleListarParticipanteForEmail/email/'+$('#participantesEmail').val(), function(data)
             {
                
-               $('#content').hide('slow');
-               $('#loading').show('slow');
+               
                if(data.mensagem !== 'fail')
                {
                    
@@ -54,6 +52,8 @@ var usuarios = {
                }
                else
                {
+                   //$('#content').show('slow');
+                   //$('#loading').hide('slow');
                    alert('E-mail não cadastrado!');
                }
             }, 'json');

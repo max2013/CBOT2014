@@ -92,14 +92,37 @@ function AntsDB(){
 		tx.executeSql(sql);
                 
                 
-                if(sessionStorage.userlogado === undefined || sessionStorage.userlogado === '') {
-                        sessionStorage.userlogado = '';
+                db.transaction(function(tx) {
+            
+            
+                    tx.executeSql('select * from tb_participantes', [], 
+                    function (tx, result)
+                    {
+                        var len = result.rows.length;
+
+                        if(len > 0)
+                        {
+                            sessionStorage.userlogado = 'true';
+                           window.location = 'homepage.html';
+                        }
+                        else
+                        {
+                            sessionStorage.userlogado = '';
                         $('#content').show('slow');
                         $('#loading').hide('slow');
-                    }
-                    else{
-                        window.location = 'homepage.html';
-                    }
+                        }
+
+                    },
+                    function()
+                    {
+                        alert('Devido a uma falha o aplicativo pode apresentar algumas indisponibilidades. Por favor feche e abra-o novamente.');
+                        window.location = 'index.html';
+
+                    });
+
+                 });
+        
+                
                     
         }
         
