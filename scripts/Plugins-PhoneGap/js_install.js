@@ -26,7 +26,7 @@ function AntsDB(){
     //HandleConnect
     this.handleConnect = function() { 
         
-        db = openDatabase('SanofiCbot2014', '1.0', 'ralves_sql', 50 * 1024 * 1024); 
+        db = openDatabase('Cbot2014', '1.5', 'ralves_sql', 50 * 1024 * 1024); 
     },
     
     //HandleCreateDb
@@ -297,7 +297,7 @@ function AntsDB(){
         //AGENDA
         db.transaction(function(tx) {
            
-           tx.executeSql('select * from tb_'+objParams.tabela+'  ORDER by '+objParams.tabela+'Id ASC', [], 
+           tx.executeSql('select * from tb_'+objParams.tabela, [], 
            function (tx, result)
            {
                var len = result.rows.length;

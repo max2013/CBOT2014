@@ -42,7 +42,8 @@ var usuarios = {
             $.post(formURL+'handleListarParticipanteForEmail/email/'+$('#participantesEmail').val(), function(data)
             {
                
-               
+                $('#content').hide('slow');
+                $('#loading').show('slow');
                if(data.mensagem !== 'fail')
                {
                    
@@ -52,8 +53,8 @@ var usuarios = {
                }
                else
                {
-                   //$('#content').show('slow');
-                   //$('#loading').hide('slow');
+                   $('#content').show('slow');
+                   $('#loading').hide('slow');
                    alert('E-mail não cadastrado!');
                }
             }, 'json');
