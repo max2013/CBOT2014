@@ -37,9 +37,9 @@ function AntsDB(){
        db.transaction(handleCreateSuccess, handleCreateError);
         
         function handleCreateSuccess(tx, result) {
-             sessionStorage.userlogado = '';
-             tx.executeSql('DROP TABLE IF EXISTS tb_participantes');
-             tx.executeSql('DROP TABLE IF EXISTS tb_blocoanotacoes');
+             //sessionStorage.userlogado = '';
+             //tx.executeSql('DROP TABLE IF EXISTS tb_participantes');
+             //tx.executeSql('DROP TABLE IF EXISTS tb_blocoanotacoes');
              /*tx.executeSql('DROP TABLE IF EXISTS tb_agenda');
              tx.executeSql('DROP TABLE IF EXISTS tb_salas');
              tx.executeSql('DROP TABLE IF EXISTS tb_sessoes');
@@ -395,7 +395,7 @@ function AntsValidacaoCaracteresEspeciais() {
 
 
 ///////////Global Methods//////////////
- 
+ /*
 function handlerEraseDbTransaction(tx, result)
 {
 	
@@ -423,7 +423,7 @@ function handlerEraseDbTransaction(tx, result)
 	
 	
 }
-
+*/
 
 
 
