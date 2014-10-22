@@ -14,8 +14,8 @@ var arrTabelas = new Array('participantes');//, 'salas', 'sessoes', 'horarios', 
             //
 //var ExternalURL = 'http://'+ip+'/googledrive/Server/Projetos/MaxExperience/Desenvolvimento/Clientes/Abrafarma/Site/';
 
-var ExternalURL = 'http://localhost:81/googledrive/Server/Projetos/MaxExperience/Desenvolvimento/Clientes/Sanofi/08_App_CBOT_2014/CBOT2014/adm/';
-//var ExternalURL = 'http://www.avmeventos.com.br/app/cbot2014/adm/';
+//var ExternalURL = 'http://localhost:81/googledrive/Server/Projetos/MaxExperience/Desenvolvimento/Clientes/Sanofi/08_App_CBOT_2014/CBOT2014/adm/';
+var ExternalURL = 'http://www.avmeventos.com.br/app/cbot2014/adm/';
 
 var antsDb = new AntsDB();    
 
