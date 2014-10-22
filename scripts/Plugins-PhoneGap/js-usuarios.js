@@ -43,11 +43,11 @@ var usuarios = {
             $.post(formURL+'handleListarParticipanteForEmail/email/'+$('#participantesEmail').val(), function(data)
             {
                
-               
+               $('#content').hide('slow');
+               $('#loading').show('slow');
                if(data.mensagem !== 'fail')
                {
-                   $('#content').hide('slow');
-                   $('#loading').show('slow');
+                   
                   sessionStorage.userlogado = 'true';
                   //window.location = 'homepage.html';
                   antsDb.handleGetDataServer($('#participantesEmail').val());

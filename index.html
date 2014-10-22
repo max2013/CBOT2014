@@ -142,9 +142,13 @@
    //document.addEventListener('deviceready', onDeviceReady , false);
    function onDeviceReady()
    {
-      
-       antsDb.handleConnect();
-       antsDb.handleCreateDb();
+      if(sessionStorage.userlogado === 'true')window.location='homepage.html';
+      else
+      {
+          antsDb.handleConnect();
+          antsDb.handleCreateDb();
+      }
+       
    }
 </script>
 
