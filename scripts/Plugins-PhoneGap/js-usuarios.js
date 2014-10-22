@@ -37,15 +37,18 @@ var usuarios = {
         
         if($('#participantesEmail').val().length > 0)
         {
-             alert('data')
+           
             var formURL = ExternalURL+'participantes/';
-            console.log(formURL+'handleListarParticipanteForEmail/email/'+$('#participantesEmail').val())
+           // console.log(formURL+'handleListarParticipanteForEmail/email/'+$('#participantesEmail').val())
             $.post(formURL+'handleListarParticipanteForEmail/email/'+$('#participantesEmail').val(), function(data)
             {
-              
+               
+               
                if(data.mensagem !== 'fail')
                {
-                  //sessionStorage.userlogado = 'true';
+                   $('#content').hide('slow');
+                   $('#loading').show('slow');
+                  sessionStorage.userlogado = 'true';
                   //window.location = 'homepage.html';
                   antsDb.handleGetDataServer($('#participantesEmail').val());
                }
