@@ -48,8 +48,33 @@ var usuarios = {
                {
                    
                   sessionStorage.userlogado = 'true';
+                    $.each(data.mensagem, function(i, index) { 
+
+
+                        var keyData='';
+                        arrDadosCampos = [];
+                        arrDadosValues = [];
+                        campos = '';
+                        values = '';
+
+                        $.each(index, function(key, value)
+                        {
+                            arrDadosCampos.push(key);
+                            arrDadosValues.push('"'+html_entity_decode(value)+'"');
+
+                        });
+
+                        campos = implode(", ", arrDadosCampos);
+                        values = implode(", ", arrDadosValues);
+                        
+                        antsDb.handleInsert({tabela:'tb_participantes', txDb:tx, field:campos, value:values});
+
+
+                    });
+                                                    
+                                                    
                   //window.location = 'homepage.html';
-                  antsDb.handleGetDataServer($('#participantesEmail').val());
+                  //antsDb.handleGetDataServer($('#participantesEmail').val());
                }
                else
                {

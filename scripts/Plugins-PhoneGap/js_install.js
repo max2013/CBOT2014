@@ -103,13 +103,13 @@ function AntsDB(){
                         if(len > 0)
                         {
                             sessionStorage.userlogado = 'true';
-                           window.location = 'homepage.html';
+                           //window.location = 'homepage.html';
                         }
                         else
                         {
                             sessionStorage.userlogado = '';
-                        $('#content').show('slow');
-                        $('#loading').hide('slow');
+                            $('#content').show('slow');
+                            $('#loading').hide('slow');
                         }
 
                     },
@@ -136,15 +136,10 @@ function AntsDB(){
     },
             
     //handleGetDataServer
+    /*
     this.handleGetDataServer = function(email)
     {
-        db.transaction(handleCreateTableSuccess, handleCreateTableError);
-        
-         function handleCreateTableSuccess(tx, result) {
-             
-            if(dbCount < (arrTabelas.length))
-            {
-                //AGENDA
+       //AGENDA
                 db.transaction(function(tx) {
 
                     tx.executeSql('select * from tb_'+arrTabelas[dbCount], [], 
@@ -232,24 +227,9 @@ function AntsDB(){
                     });
 
                  });
-
-            }
-            else
-            {   
-                //$('#content').show('slow');
-                sessionStorage.userlogado = 'true';
-                window.location = 'homepage.html';
-            }
-        
-         }
-         
-         function handleCreateTableError(tx, result) {
-            alert('#Error: Devido a uma falha o aplicativo pode apresentar algumas indisponibilidades. Por favor feche e abra-o novamente.');
-            window.location = 'index.html';
-         }
-        
     },
-            
+    */
+   
     //HandleInsert
     this.handleInsert = function(arrDados) {
         
