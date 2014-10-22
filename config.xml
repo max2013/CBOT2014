@@ -3,8 +3,8 @@
 <!-- config.xml reference: https://build.phonegap.com/docs/config-xml -->
 <widget xmlns     = "http://www.w3.org/ns/widgets"
         xmlns:gap = "http://phonegap.com/ns/1.0"
-        id        = "br.com.xpirapp.appeme"
-        version   = "1.0.1">
+        id        = "br.com.maxexperience.aft"
+        version   = "1.0.3">
 
     <name>CBOT 2014</name>
 
