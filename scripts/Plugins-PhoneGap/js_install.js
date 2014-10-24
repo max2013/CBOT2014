@@ -60,6 +60,8 @@ function AntsDB(){
 		"participantesCidade VARCHAR(100), " +
 		"participantesUf VARCHAR(100), " +
 		"participantesEmitido VARCHAR(100), " +
+                "participantesTransferIda VARCHAR(255), " +
+                "participantesTransferVolta VARCHAR(255), " +
 		"participantesIdaOrigem VARCHAR(100), " +
 		"participantesIdaDestino VARCHAR(100), " +
 		"participantesIdaData VARCHAR(100), " +
