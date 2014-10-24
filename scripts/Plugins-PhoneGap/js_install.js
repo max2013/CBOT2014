@@ -105,7 +105,7 @@ function AntsDB(){
                         if(len > 0)
                         {
                             sessionStorage.userlogado = 'true';
-                           //window.location = 'homepage.html';
+                            window.location = 'homepage.html';
                         }
                         else
                         {
