@@ -33,7 +33,7 @@ var usuarios = {
     
     handleGetDataParticipante:function()
     {
-        
+         
         if($('#participantesEmail').val().length > 0)
         {
            
@@ -44,6 +44,7 @@ var usuarios = {
                
                 $('#content').hide('slow');
                 $('#loading').show('slow');
+                
                if(data.mensagem !== 'fail')
                {
                    
@@ -91,7 +92,7 @@ var usuarios = {
         }
         else
         {
-            alert('por favor, preencha seu e-mail.')
+            alert('Por favor, preencha seu e-mail.')
         }
     },
     
