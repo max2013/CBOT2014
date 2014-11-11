@@ -81,7 +81,11 @@
                 sessionStorage.email = employee.participantesEmail;
                 sessionStorage.id = employee.participantesId;
                 sessionStorage.hotel = employee.participantesHotel;
-
+                if(sessionStorage.hotel === '0'){
+                    $('#idHotelNome').html('Hospedagem não disponível');
+                    $('#idHotelEndereco').html('');
+                    $('#imgHotel').attr('src', 'images/hoteis/hotel_no.jpg');
+                 }
                 if(sessionStorage.hotel === '1'){
                     $('#idHotelNome').html('Hotel Pestana Rio Atlântica');
                     $('#idHotelEndereco').html('Av. Atlântica, 2964 – Copacabana/RJ<br>Tel: 21 2548-6332');
