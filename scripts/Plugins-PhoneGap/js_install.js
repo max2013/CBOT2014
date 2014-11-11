@@ -8,14 +8,13 @@ var arrDadosCampos = new Array();
 var arrDadosValues = new Array();
 var arrValuesDb = new Array();
 var dbError = 0;
-sessionStorage.alertAlarm = 'false';
 var dbCount = 0;
 var arrTabelas = new Array('participantes');//, 'salas', 'sessoes', 'horarios', 'empresas'
             //
 //var ExternalURL = 'http://'+ip+'/googledrive/Server/Projetos/MaxExperience/Desenvolvimento/Clientes/Abrafarma/Site/';
 
-//var ExternalURL = 'http://localhost:81/googledrive/Server/Projetos/MaxExperience/Desenvolvimento/Clientes/Sanofi/08_App_CBOT_2014/CBOT2014/adm/';
-var ExternalURL = 'http://www.avmeventos.com.br/app/cbot2014/adm/';
+var ExternalURL = 'http://localhost/googledrive/Projetos/MaxExperience/Desenvolvimento/Clientes/Sanofi/08_App_CBOT_2014/CBOT2014/adm/';
+//var ExternalURL = 'http://www.avmeventos.com.br/app/cbot2014/adm/';
 
 var antsDb = new AntsDB();    
 
@@ -40,49 +39,52 @@ function AntsDB(){
              //sessionStorage.userlogado = '';
              //tx.executeSql('DROP TABLE IF EXISTS tb_participantes');
              //tx.executeSql('DROP TABLE IF EXISTS tb_blocoanotacoes');
-             /*tx.executeSql('DROP TABLE IF EXISTS tb_agenda');
-             tx.executeSql('DROP TABLE IF EXISTS tb_salas');
-             tx.executeSql('DROP TABLE IF EXISTS tb_sessoes');
-             tx.executeSql('DROP TABLE IF EXISTS tb_horarios');
-             tx.executeSql('DROP TABLE IF EXISTS tb_empresas');
-             tx.executeSql('DROP TABLE IF EXISTS tb_anotacoes');
-             tx.executeSql('DROP TABLE IF EXISTS tb_alarme');
-             */
+             //tx.executeSql('DROP TABLE IF EXISTS tb_aereo');
+            
             //Tb Participantes
             
-           
-           var sql = 
+               
+               //tb Usuarios
+	var sql = 
 		"CREATE TABLE IF NOT EXISTS tb_participantes( "+
 		"participantesId INT(11), " +//INTEGER PRIMARY KEY AUTOINCREMENT
-		"participantesHotel INT(11), " +
-                "participantesNome VARCHAR(50), " +
+                "participantesHotel INT(11), " +
+		"participantesNome VARCHAR(100), " +
 		"participantesEmail VARCHAR(100), " +
-		"participantesCidade VARCHAR(100), " +
-		"participantesUf VARCHAR(100), " +
-		"participantesEmitido VARCHAR(100), " +
-                "participantesTransferIda VARCHAR(255), " +
-                "participantesTransferVolta VARCHAR(255), " +
-		"participantesIdaOrigem VARCHAR(100), " +
-		"participantesIdaDestino VARCHAR(100), " +
-		"participantesIdaData VARCHAR(100), " +
-		"participantesIdaCiaAerea VARCHAR(100), " +
-		"participantesIdaVoo VARCHAR(100), " +
-		"participantesIdaSaida VARCHAR(100), " +
-		"participantesIdaChegada VARCHAR(100), " +
-		"participantesIdaLocalizacao VARCHAR(100), " +
-		"participantesIdaETicket VARCHAR(100), " +
-		"participantesVoltaOrigem VARCHAR(100), " +
-		"participantesVoltaDestino VARCHAR(100), " +
-		"participantesVoltaData VARCHAR(100), " +
-		"participantesVoltaCiaAerea VARCHAR(100), " +
-		"participantesVoltaVoo VARCHAR(100), " +
-		"participantesVoltaSaida VARCHAR(100), " +
-		"participantesVoltaChegada VARCHAR(100), " +
-		"participantesVoltaLocalizacao VARCHAR(100), " +
-		"participantesVoltaETicket VARCHAR(100), " +
                 "participantesData VARCHAR(100), " +
 		"participantesStatus INT(11) )";
 		tx.executeSql(sql);
+                
+        //tb Areos
+	var sql = 
+		"CREATE TABLE IF NOT EXISTS tb_aereo( "+
+		"aereoId INT(11), " +//INTEGER PRIMARY KEY AUTOINCREMENT
+		"aereoParticipantesId INT(11), " +
+		"aereoCidade VARCHAR(100), " +
+		"aereoUf VARCHAR(100), " +
+		"aereoEmitido VARCHAR(100), " +
+		"aereoIdaOrigem VARCHAR(100), " +
+		"aereoIdaDestino VARCHAR(100), " +
+		"aereoIdaData VARCHAR(100), " +
+		"aereoIdaCiaAerea VARCHAR(100), " +
+		"aereoIdaVoo VARCHAR(100), " +
+		"aereoIdaSaida VARCHAR(100), " +
+		"aereoIdaChegada VARCHAR(100), " +
+		"aereoIdaLocalizacao VARCHAR(100), " +
+		"aereoIdaETicket VARCHAR(100), " +
+		"aereoVoltaOrigem VARCHAR(100), " +
+		"aereoVoltaDestino VARCHAR(100), " +
+		"aereoVoltaData VARCHAR(100), " +
+		"aereoVoltaCiaAerea VARCHAR(100), " +
+		"aereoVoltaVoo VARCHAR(100), " +
+		"aereoVoltaSaida VARCHAR(100), " +
+		"aereoVoltaChegada VARCHAR(100), " +
+		"aereoVoltaLocalizacao VARCHAR(100), " +
+		"aereoVoltaETicket VARCHAR(100), " +
+                "aereoData VARCHAR(100), " +
+		"aereoStatus INT(11) )";
+		tx.executeSql(sql);
+                
                 
                 //Anotações
                 var sql = 
@@ -101,7 +103,7 @@ function AntsDB(){
                     function (tx, result)
                     {
                         var len = result.rows.length;
-
+                        
                         if(len > 0)
                         {
                             sessionStorage.userlogado = 'true';
@@ -234,10 +236,8 @@ function AntsDB(){
    
     //HandleInsert
     this.handleInsert = function(arrDados) {
+         arrDados.txDb.executeSql("INSERT INTO "+arrDados.tabela+" ("+arrDados.field+") VALUES ("+arrDados.value+")");
         
-        
-        arrDados.txDb.executeSql("INSERT INTO "+arrDados.tabela+" ("+arrDados.field+") VALUES ("+arrDados.value+")");
-      
     },
     
     this.handleGetDataSqlLite = function(objParams) {
@@ -247,18 +247,18 @@ function AntsDB(){
         db.transaction(function(tx) {
             
             
-           tx.executeSql('select * from tb_'+objParams.tabela+ ' WHERE ' +objParams.tabela+'Id = '+sessionStorage.userId, [], 
+           tx.executeSql('select * from tb_'+objParams.tabela+ ' WHERE ' +objParams.tabela+'ParticipantesId = '+sessionStorage.userId, [], 
            function (tx, result)
            {
                var len = result.rows.length;
               
                if(len < 1)
                {
-                   objParams.function(true,result);
+                   objParams.function(false);
                }
                else
                {
-                   objParams.function(false);
+                   objParams.function(true, result);
                }
 
            },

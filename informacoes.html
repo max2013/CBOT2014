@@ -53,13 +53,230 @@
    function onDeviceReady()
    {
        antsDb.handleConnect();
+       //usuarios.handleSelectDadosPageMeusDados();
        antsDb.handleGetData2SqlLite({tabela:'participantes', function:handleGetDadosInfo});
    }
    
    function handleGetDadosInfo(boo, data)
    {
-      
-       var employee = data.rows.item(0);
+                var len = data.rows.length;
+                
+                for (var i=0; i<len; i++) {
+				
+                        var employee = data.rows.item(i);
+                        dadosParticipantesDados.push(
+                                                employee.participantesId,
+                                                employee.participantesNome,
+                                                employee.participantesEmail,
+                                                employee.participantesStatus
+                                                ); 
+                }
+                
+                id = employee.participantesId;
+                sessionStorage.userId = id;
+                email = employee.participantesEmail;
+                nome = employee.participantesNome;
+                
+                sessionStorage.nome = employee.participantesNome;
+                sessionStorage.email = employee.participantesEmail;
+                sessionStorage.id = employee.participantesId;
+                sessionStorage.hotel = employee.participantesHotel;
+
+                if(sessionStorage.hotel === '1'){
+                    $('#idHotelNome').html('Hotel Pestana Rio Atlântica');
+                    $('#idHotelEndereco').html('Av. Atlântica, 2964 – Copacabana/RJ<br>Tel: 21 2548-6332');
+                    $('#imgHotel').attr('src', 'images/hoteis/hotel_pestana.jpg');
+                 }
+                if(sessionStorage.hotel === '2'){
+                    $('#idHotelNome').html('Novotel Santos Dumont');
+                    $('#idHotelEndereco').html('Av. Marechal Câmara, 300 – Centro/RJ<br>Tel: 21 3506-8500');
+                    $('#imgHotel').attr('src', 'images/hoteis/hotel_novotel.jpg');
+                 }
+                if(sessionStorage.hotel === '3'){
+                    $('#idHotelNome').html('Hotel Rio Othon Place');
+                    $('#idHotelEndereco').html('Av. Atlântica, 3264 – Copacabana/RJ<br>Cel: 11 96419-2341');
+                    $('#imgHotel').attr('src', 'images/hoteis/hotel_rio_othon.jpg');
+                 }
+                if(sessionStorage.hotel === '4'){
+                    $('#idHotelNome').html('Hotel Windsor Guanabara');
+                    $('#idHotelEndereco').html('Av. Presidente Vargas, 392 – Centro/RJ<br>Tel: 21 2195-6000');
+                    $('#imgHotel').attr('src', 'images/hoteis/hotel_windsor.jpg');
+                 }
+        
+                
+                //antsDb.handleGetDataSqlLite({tabela:'aereo', function:handleGetDadosInfo2});
+                //var sql = "select * from tb_aereo WHERE aereoParticipantesId="+id;
+                    //tx.executeSql(sql, [], getDataAereo);
+                        
+                  db.transaction(function(tx) {
+            
+                        tx.executeSql('select * from tb_aereo WHERE aereoParticipantesId='+id, [], 
+                        function (tx, result)
+                        {
+                            var len = result.rows.length;
+                            
+                            var label = 'SAÍDA';
+                            
+                            
+                            if(len < 1)
+                            {
+                                
+                            console.log('Nada')
+                            }
+                            else
+                            {
+                                for (var i=0; i<len; i++) {
+                        
+                                        if(i === 0) label === 'IDA';
+                                        else label = 'Conexão';
+                                        var employee = result.rows.item(i);
+                                        
+                                if(employee.aereoIdaOrigem !== 'null')
+                                {
+                                    $('#idToogle').append(
+                                        '<div class="toggle-1">'+
+                                            '<div class="deploy-toggle-1" data-id="'+employee.aereoId+'" id="'+employee.aereoId+'">'+label+' - '+employee.aereoIdaData+'</div>'+
+                                            '<div class="toggle-content" id="toggle-content'+employee.aereoId+'">'+
+                                                '<table cellspacing=\'0\' class="table">'+
+
+                                                        '<tr>'+
+                                                            '<td class="table-sub-title" ><strong>Origem:</strong></td>'+
+                                                            '<td colspan="2"><span id="divOrigem">'+employee.aereoIdaOrigem+'</span></td>'+
+                                                        '</tr>'+
+
+                                                        '<tr>'+
+                                                            '<td class="table-sub-title" > <strong>Destino:</strong></td>'+
+                                                            '<td colspan="2"><span id="divDestino">'+employee.aereoIdaDestino+'</span></td>'+
+                                                        '</tr>'+
+
+                                                        '<tr>'+
+                                                            '<td class="table-sub-title" > <strong>Data:</strong></td>'+
+                                                            '<td colspan="2"><span id="divData">'+employee.aereoIdaData+'</span></td>'+
+                                                        '</tr>'+
+
+                                                        '<tr>'+
+                                                            '<td class="table-sub-title" > <strong>Companhia Aérea:</strong></td>'+
+                                                            '<td colspan="2"><span id="divCiaAerea">'+employee.aereoIdaCiaAerea+'</span></td>'+
+                                                        '</tr>'+
+
+                                                        '<tr>'+
+                                                            '<td class="table-sub-title" > <strong>Vôo:</strong></td>'+
+                                                            '<td colspan="2"><span id="divVoo">'+employee.aereoIdaVoo+'</span></td>'+
+                                                        '</tr>'+
+
+                                                        '<tr>'+
+                                                            '<td class="table-sub-title" > <strong>Saída:</strong></td>'+
+                                                            '<td colspan="2"><span id="divSaida">'+employee.aereoIdaSaida+'</span></td>'+
+                                                        '</tr>'+
+
+                                                        '<tr>'+
+                                                            '<td class="table-sub-title" > <strong>Chegada:</strong></td>'+
+                                                            '<td colspan="2"><span id="divChegada">'+employee.aereoIdaChegada+'</span></td>'+
+                                                        '</tr>'+
+
+                                                        '<tr>'+
+                                                            '<td class="table-sub-title" > <strong>Localização:</strong></td>'+
+                                                            '<td colspan="2"><span id="divLocalizacao">'+employee.aereoIdaLocalizacao+'</span></td>'+
+                                                        '</tr>'+
+
+                                                        '<tr>'+
+                                                            '<td class="table-sub-title" > <strong>Eticket:</strong></td>'+
+                                                            '<td colspan="2"><span id="divEticket">'+employee.aereoIdaETicket+'</span></td>'+
+                                                        '</tr>'+
+
+                                                    '</table>'+
+                                            '</div>'+
+                                        '</div>');
+                                }
+                                        
+                                if(employee.aereoVoltaOrigem !== 'null')
+                                {
+                                    $('#idToogle2').append(
+                                        '<div class="toggle-1">'+
+                                            '<div class="deploy-toggle-1" data-id="'+(i*100)+'" id="'+(i*100)+'">'+label+' - '+employee.aereoVoltaData+'</div>'+
+                                            '<div class="toggle-content" id="toggle-content'+(i*100)+'">'+
+                                                '<table cellspacing=\'0\' class="table">'+
+
+                                                        '<tr>'+
+                                                            '<td class="table-sub-title" > <strong>Origem:</strong></td>'+
+                                                            '<td colspan="2"><span id="divOrigem">'+employee.aereoVoltaOrigem+'</span></td>'+
+                                                        '</tr>'+
+
+                                                        '<tr>'+
+                                                            '<td class="table-sub-title" > <strong>Destino:</strong></td>'+
+                                                            '<td colspan="2"><span id="divDestino">'+employee.aereoVoltaDestino+'</span></td>'+
+                                                        '</tr>'+
+
+                                                        '<tr>'+
+                                                            '<td class="table-sub-title" > <strong>Data:</strong></td>'+
+                                                            '<td colspan="2"><span id="divData">'+employee.aereoVoltaData+'</span></td>'+
+                                                        '</tr>'+
+
+                                                        '<tr>'+
+                                                            '<td class="table-sub-title" > <strong>Companhia Aérea:</strong></td>'+
+                                                            '<td colspan="2"><span id="divCiaAerea">'+employee.aereoVoltaCiaAerea+'</span></td>'+
+                                                        '</tr>'+
+
+                                                        '<tr>'+
+                                                            '<td class="table-sub-title" > <strong>Vôo:</strong></td>'+
+                                                            '<td colspan="2"><span id="divVoo">'+employee.aereoVoltaVoo+'</span></td>'+
+                                                        '</tr>'+
+
+                                                        '<tr>'+
+                                                            '<td class="table-sub-title" > <strong>Saída:</strong></td>'+
+                                                            '<td colspan="2"><span id="divSaida">'+employee.aereoVoltaSaida+'</span></td>'+
+                                                        '</tr>'+
+
+                                                        '<tr>'+
+                                                            '<td class="table-sub-title" > <strong>Chegada:</strong></td>'+
+                                                            '<td colspan="2"><span id="divChegada">'+employee.aereoVoltaChegada+'</span></td>'+
+                                                        '</tr>'+
+
+                                                        '<tr>'+
+                                                            '<td class="table-sub-title" > <strong>Localização:</strong></td>'+
+                                                            '<td colspan="2"><span id="divLocalizacao">'+employee.aereoVoltaLocalizacao+'</span></td>'+
+                                                        '</tr>'+
+
+                                                        '<tr>'+
+                                                            '<td class="table-sub-title" > <strong>Eticket:</strong></td>'+
+                                                            '<td colspan="2"><span id="divEticket">'+employee.aereoVoltaETicket+'</span></td>'+
+                                                        '</tr>'+
+
+                                                    '</table>'+
+                                            '</div>'+
+                                        '</div>');
+                                }
+                        
+                        
+                                        
+
+                                        $('#'+employee.aereoId).click(function()
+                                        {
+                                            $('#toggle-content'+$(this).attr('id')).toggle('slow');
+                                        });
+
+                                        $('#'+(i*100)).click(function()
+                                        {
+                                            $('#toggle-content'+$(this).attr('id')).toggle('slow');
+                                        });
+
+                                }
+                        
+                            }
+
+                        },
+                        function()
+                        {
+                            alert('Devido a uma falha o aplicativo pode apresentar algumas indisponibilidades. Por favor feche e abra-o novamente.');
+                            window.location = 'index.html';
+
+                        });
+
+                     });
+           
+          
+            
+      /* var employee = data.rows.item(0);
        sessionStorage.nome = employee.participantesNome;
        sessionStorage.email = employee.participantesEmail;
        sessionStorage.id = employee.participantesId;
@@ -114,7 +331,7 @@
        $('#transferVoltaHotel1').html(employee.participantesTransferVolta);
        
        
-       
+       */
    }
 </script>
 </head>
@@ -152,152 +369,43 @@
         
         <div class="two-half-responsive last-column">
             <div class="container">
-                <div class="toggle-1">
-                    <a href="#" class="deploy-toggle-1">Aéreo</a>
-                    <div class="toggle-content">
-                        
-                       
-                            <table cellspacing='0' class="table">
-                                <tr>
-                                    <th colspan="3">Meus dados de IDA:</th>
-                                </tr>
-
-                                 <tr>
-                                    <td class="table-sub-title"  >Cidade</td>
-                                    <td class="table-sub-title" id="cidadeIda" colspan="2"> </td>
-                                </tr>
-
-                                 <tr>
-                                    <td class="table-sub-title"  >UF</td>
-                                    <td class="table-sub-title" id="ufIda" colspan="2"> </td>
-                                </tr>
-
-                                 <tr>
-                                    <td class="table-sub-title"  >Emitido</td>
-                                    <td class="table-sub-title" id="emitidoIda" colspan="2"> </td>
-                                </tr>
-
-                                 <tr>
-                                    <td class="table-sub-title"  >Origem</td>
-                                    <td class="table-sub-title" id="origemIda" colspan="2"> </td>
-                                </tr>
-
-                                 <tr>
-                                    <td class="table-sub-title"  >Destino</td>
-                                    <td class="table-sub-title" id="destinoIda" colspan="2"> </td>
-                                </tr>
-
-                                 <tr>
-                                    <td class="table-sub-title"  >Data</td>
-                                    <td class="table-sub-title" id="dataIda" colspan="2"> </td>
-                                </tr>
-
-                                 <tr>
-                                    <td class="table-sub-title"  >Cia Aérea</td>
-                                    <td class="table-sub-title" id="ciaAereaIda" colspan="2"> </td>
-                                </tr>
-
-                                 <tr>
-                                    <td class="table-sub-title"  >Vôo</td>
-                                    <td class="table-sub-title" id="vooIda" colspan="2"> </td>
-                                </tr>
-
-                                 <tr>
-                                    <td class="table-sub-title"  >Saida</td>
-                                    <td class="table-sub-title" id="saidaIda" colspan="2"> </td>
-                                </tr>
-
-                                 <tr>
-                                    <td class="table-sub-title"  >Chegada</td>
-                                    <td class="table-sub-title" id="chegadaIda" colspan="2"> </td>
-                                </tr>
-
-                                 <tr>
-                                    <td class="table-sub-title"  >Localização</td>
-                                    <td class="table-sub-title" id="localizacaoIda" colspan="2"> </td>
-                                </tr>
-
-                                 <tr>
-                                    <td class="table-sub-title"  >Eticket</td>
-                                    <td class="table-sub-title" id="eticketIda" colspan="2"> </td>
-                                </tr>            
-                            </table>
-        
-                            <table cellspacing='0' class="table">
-                                <tr>
-                                    <th colspan="3">Meus dados de Volta:</th>
-                                </tr>
-
-
-                                 <tr>
-                                    <td class="table-sub-title"  >Origem</td>
-                                    <td class="table-sub-title" id="origemVolta" colspan="2"> </td>
-                                </tr>
-
-                                 <tr>
-                                    <td class="table-sub-title"  >Destino</td>
-                                    <td class="table-sub-title" id="destinoVolta" colspan="2"> </td>
-                                </tr>
-
-                                 <tr>
-                                    <td class="table-sub-title"  >Data</td>
-                                    <td class="table-sub-title" id="dataVolta" colspan="2"> </td>
-                                </tr>
-
-                                 <tr>
-                                    <td class="table-sub-title"  >Cia Aérea</td>
-                                    <td class="table-sub-title" id="ciaAereaVolta" colspan="2"> </td>
-                                </tr>
-
-                                 <tr>
-                                    <td class="table-sub-title"  >Vôo</td>
-                                    <td class="table-sub-title" id="vooVolta" colspan="2"> </td>
-                                </tr>
-
-                                 <tr>
-                                    <td class="table-sub-title"  >Saida</td>
-                                    <td class="table-sub-title" id="saidaVolta" colspan="2"> </td>
-                                </tr>
-
-                                 <tr>
-                                    <td class="table-sub-title"  >Chegada</td>
-                                    <td class="table-sub-title" id="chegadaVolta" colspan="2"> </td>
-                                </tr>
-
-                                 <tr>
-                                    <td class="table-sub-title"  >Localização</td>
-                                    <td class="table-sub-title" id="localizacaoVolta" colspan="2"> </td>
-                                </tr>
-
-                                 <tr>
-                                    <td class="table-sub-title"  >Eticket</td>
-                                    <td class="table-sub-title" id="eticketVolta" colspan="2"> </td>
-                                </tr>            
-                            </table>
-                        
+               <div class="two-half-responsive last-column">
+               
+                <div class="container">
+                    <div class="tabs">
+                        <a href="#" class="tab-but tab-but-1 tab-active">IDA</a>
+                        <a href="#" class="tab-but tab-but-2">VOLTA</a>
                     </div>
-                </div>
+                    <div class="tab-content tab-content-1">
+                        <div  id="idToogle"></div>
+                    </div>
+                    
+                    <div class="tab-content tab-content-2">
+                        <div  id="idToogle2"></div>
+                    </div>
+                   
+                </div>      
+            </div>
             </div>
             
             <div class="decoration"></div>
             <h3>Hospedagem</h3>
-            
+           
             <div class="container">
                 <div class="toggle-1">
-                    <a href="#" class="deploy-toggle-1">Hotel Pestana Rio Atlântica</a>
+                    <a href="#" class="deploy-toggle-1" id="idHotelNome">Hotel Pestana Rio Atlântica</a>
                     <div class="toggle-content">
                         
                             <table cellspacing='0' class="table">
                                 <tr>
                                     <th colspan="3">
-                                        <img src="images/hoteis/hotel_pestana.jpg" width="100%"/>
-                                        Av. Atlântica, 2964 – Copacabana –  RJ<br>
-                                        Tel: 21 2548-6332
+                                        <img id="imgHotel" src="images/hoteis/hotel_pestana.jpg" width="100%"/>
+                                        <div id="idHotelEndereco"></div>
                                     </th>
                                 </tr>
                                 
                                 <tr>
-                                    <td class="table-sub-title" id="idHotel" colspan="3"> 
+                                    <td class="table-sub-title" colspan="3"> 
                                         <p>
                                             <strong>Contato:</strong><br>
                                             <strong>Valéria Octavio</strong> - Coordenadora Access <br>
@@ -310,7 +418,7 @@
                     </div>
                 </div>
             </div>
-            
+           <!--
             <div class="container">
                 <div class="toggle-1">
                     <a href="#" class="deploy-toggle-1">Novotel Santos Dumont</a>
@@ -397,7 +505,7 @@
                     </div>
                 </div>
             </div>
-            
+            -->
             <!--
             <div class="container">
                 <div class="toggle-1">

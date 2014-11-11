@@ -49,9 +49,10 @@
         FastClick.attach(document.body);
      });
      
-     function viewAgenda(dia)
+     function viewAgenda(src, dia)
      {
-         var ref = window.open('images/'+dia+'.jpg', '_blank', 'EnableViewPortScale=yes');
+         if(dia === undefined) dia = '';
+         var ref = window.open('images/img_sala_'+src+dia+'.jpg', '_blank', 'EnableViewPortScale=yes');
      }
 </script>
 </head>
@@ -89,153 +90,253 @@
         
       
             <div class="two-half-responsive last-column">
-            <!--
-            <div class="container">
+            
+                <div class="container">
                 <div class="toggle-1">
-                    <a href="#" class="deploy-toggle-1">Hotel Pestana Rio Atlântica</a>
+                    <a href="#" class="deploy-toggle-1">Dia 19 de Novembro</a>
                     <div class="toggle-content">
                         
                             <table cellspacing='0' >
                                 <tr>
-                                    <th>
-                                        <table>
-                                            <tr>
-                                                <th>Time</th>
-                                            </tr>
-                                        </table>
-                                    </th>
+                                    <td>
+                                        <a href="#" onclick="viewAgenda('ipanema')">Sala Ipanema</a>
+                                    </td>
                                    
-                                    <th >
-                                        <table>
-                                            <tr>
-                                                <th>IPANEMA</th>
-                                            </tr>
-                                        </table>
-                                    </th>
                                 </tr>
                                 
-
+                                <tr>
+                                    <td>
+                                       <a href="#" onclick="viewAgenda('copacabana')">Sala Copacabana</a>
+                                    </td>
+                                   
+                                </tr>
+                                
+                                <tr>
+                                    <td>
+                                       <a href="#" onclick="viewAgenda('saoconrado')">Sala São Conrado</a>
+                                    </td>
+                                   
+                                </tr>
+                                
+                                <tr>
+                                    <td>
+                                       <a href="#" onclick="viewAgenda('leblon')">Sala Leblon</a>
+                                    </td>
+                                   
+                                </tr>
+                                
+                                <tr>
+                                    <td>
+                                       <a href="#" onclick="viewAgenda('arpoador')">Sala Arpoador</a>
+                                    </td>
+                                   
+                                </tr>
+                                
+                                <tr>
+                                    <td>
+                                       <a href="#" onclick="viewAgenda('leme')">Sala Leme</a>
+                                    </td>
+                                   
+                                </tr>
+                                
+                                <tr>
+                                    <td>
+                                       <a href="#" onclick="viewAgenda('botafogo')">Sala Botafogo</a>
+                                    </td>
+                                   
+                                </tr>
+                                
+                                <tr>
+                                    <td>
+                                       <a href="#" onclick="viewAgenda('flamengo')">Sala Flamengo</a>
+                                    </td>
+                                   
+                                </tr>
+                                
+                                <tr>
+                                    <td>
+                                       <a href="#" onclick="viewAgenda('lagoa')">Sala Lagoa</a>
+                                    </td>
+                                   
+                                </tr>
+                                
+                                <tr>
+                                    <td>
+                                       <a href="#" onclick="viewAgenda('jdbotanico')">Sala Jd. Botânico</a>
+                                    </td>
+                                   
+                                </tr>
+                                
+                                <tr>
+                                    <td>
+                                       <a href="#" onclick="viewAgenda('tijuca')">Sala Barra da Tijuca</a>
+                                    </td>
+                                   
+                                </tr>
+                                
+                                <tr>
+                                    <td>
+                                       <a href="#" onclick="viewAgenda('urca')">Sala Urca</a>
+                                    </td>
+                                   
+                                </tr>
+                                
+                                <tr>
+                                    <td>
+                                       <a href="#" onclick="viewAgenda('gloria')">Sala Glória</a>
+                                    </td>
+                                   
+                                </tr>
+                                
+                                <tr>
+                                    <td>
+                                       <a href="#" onclick="viewAgenda('lapa')">Sala Lapa</a>
+                                    </td>
+                                   
+                                </tr>
+                                
+                                <tr>
+                                    <td>
+                                       <a href="#" onclick="viewAgenda('statereza')">Sala Sta Tereza</a>
+                                    </td>
+                                   
+                                </tr>
+                                
+                                <tr>
+                                    <td>
+                                       <a href="#" onclick="viewAgenda('maracana')">Sala Maracanã</a>
+                                    </td>                                   
+                                </tr>
+                                
                             </table>
                     </div>
                 </div>
             </div>
-            
-            <div class="container">
+                
+                 <div class="container">
                 <div class="toggle-1">
-                    <a href="#" class="deploy-toggle-1">Novotel Santos Dumont</a>
+                    <a href="#" class="deploy-toggle-1">Dia 20 de Novembro</a>
                     <div class="toggle-content">
                         
-                            <table cellspacing='0' class="table">
+                            <table cellspacing='0' >
                                 <tr>
-                                    <th colspan="3">
-                                        <img src="images/hoteis/hotel_novotel.jpg" width="100%"/>
-                                        Av. Marechal Câmara, 300 – Centro – RJ<br>
-                                        Tel: 21 3506-8500
-                                    </th>
+                                    <td>
+                                        <a href="#" onclick="viewAgenda('ipanema','20')">Sala Ipanema</a>
+                                    </td>
+                                   
                                 </tr>
                                 
                                 <tr>
-                                    <td class="table-sub-title"  >Transfer de IDA</td>
-                                    <td class="table-sub-title" id="transferIdaHotel2" colspan="2"> </td>
+                                    <td>
+                                       <a href="#" onclick="viewAgenda('copacabana','20')">Sala Copacabana</a>
+                                    </td>
+                                   
                                 </tr>
                                 
-                                 <tr>
-                                    <td class="table-sub-title"  >Transfer de VOLTA</td>
-                                    <td class="table-sub-title" id="transferVoltaHotel2" colspan="2"> </td>
+                                <tr>
+                                    <td>
+                                       <a href="#" onclick="viewAgenda('saoconrado','20')">Sala São Conrado</a>
+                                    </td>
+                                   
                                 </tr>
-
+                                
+                                <tr>
+                                    <td>
+                                       <a href="#" onclick="viewAgenda('leblon','20')">Sala Leblon</a>
+                                    </td>
+                                   
+                                </tr>
+                                
+                                <tr>
+                                    <td>
+                                       <a href="#" onclick="viewAgenda('arpoador','20')">Sala Arpoador</a>
+                                    </td>
+                                   
+                                </tr>
+                                
+                                <tr>
+                                    <td>
+                                       <a href="#" onclick="viewAgenda('leme','20')">Sala Leme</a>
+                                    </td>
+                                   
+                                </tr>
+                                
+                                <tr>
+                                    <td>
+                                       <a href="#" onclick="viewAgenda('botafogo','20')">Sala Botafogo</a>
+                                    </td>
+                                   
+                                </tr>
+                                
+                                <tr>
+                                    <td>
+                                       <a href="#" onclick="viewAgenda('flamengo','20')">Sala Flamengo</a>
+                                    </td>
+                                   
+                                </tr>
+                                
+                                <tr>
+                                    <td>
+                                       <a href="#" onclick="viewAgenda('lagoa','20')">Sala Lagoa</a>
+                                    </td>
+                                   
+                                </tr>
+                                
+                                <tr>
+                                    <td>
+                                       <a href="#" onclick="viewAgenda('jdbotanico','20')">Sala Jd. Botânico</a>
+                                    </td>
+                                   
+                                </tr>
+                                
+                                <tr>
+                                    <td>
+                                       <a href="#" onclick="viewAgenda('tijuca','20')">Sala Barra da Tijuca</a>
+                                    </td>
+                                   
+                                </tr>
+                                
+                                <tr>
+                                    <td>
+                                       <a href="#" onclick="viewAgenda('urca','20')">Sala Urca</a>
+                                    </td>
+                                   
+                                </tr>
+                                
+                                <tr>
+                                    <td>
+                                       <a href="#" onclick="viewAgenda('gloria','20')">Sala Glória</a>
+                                    </td>
+                                   
+                                </tr>
+                                
+                                <tr>
+                                    <td>
+                                       <a href="#" onclick="viewAgenda('lapa','20')">Sala Lapa</a>
+                                    </td>
+                                   
+                                </tr>
+                                
+                                <tr>
+                                    <td>
+                                       <a href="#" onclick="viewAgenda('statereza','20')">Sala Sta Tereza</a>
+                                    </td>
+                                   
+                                </tr>
+                                
+                                <tr>
+                                    <td>
+                                       <a href="#" onclick="viewAgenda('maracana','20')">Sala Maracanã</a>
+                                    </td>                                   
+                                </tr>
+                                
                             </table>
                     </div>
                 </div>
             </div>
             
-            <div class="container">
-                <div class="toggle-1">
-                    <a href="#" class="deploy-toggle-1">Hotel Rio Othon Place</a>
-                    <div class="toggle-content">
-                        
-                            <table cellspacing='0' class="table">
-                                <tr>
-                                    <th colspan="3">
-                                        <img src="images/hoteis/hotel_rio_othon.jpg" width="100%"/>
-                                        Av. Atlântica, 3264 – Copacabana – RJ <br>
-                                        Tel: 21 2106-1500
-                                    </th>
-                                </tr>
-                                
-                                <tr>
-                                    <td class="table-sub-title"  >Transfer de IDA</td>
-                                    <td class="table-sub-title" id="transferIdaHotel3" colspan="2"> </td>
-                                </tr>
-                                
-                                 <tr>
-                                    <td class="table-sub-title"  >Transfer de VOLTA</td>
-                                    <td class="table-sub-title" id="transferVoltaHotel3" colspan="2"> </td>
-                                </tr>
-
-                            </table>
-                    </div>
-                </div>
-            </div>
             
-            <div class="container">
-                <div class="toggle-1">
-                    <a href="#" class="deploy-toggle-1">Hotel Windsor Guanabara</a>
-                    <div class="toggle-content">
-                        
-                            <table cellspacing='0' class="table">
-                                <tr>
-                                    <th colspan="3">
-                                        <img src="images/hoteis/hotel_windsor.jpg" width="100%"/>
-                                        Av. Presidente Vargas, 392 - Centro – RJ <br>
-                                        Tel: 21 2195-6000
-                                    </th>
-                                </tr>
-                                
-                                <tr>
-                                    <td class="table-sub-title"  >Transfer de IDA</td>
-                                    <td class="table-sub-title" id="transferIdaHotel4" colspan="2"> </td>
-                                </tr>
-                                
-                                 <tr>
-                                    <td class="table-sub-title"  >Transfer de VOLTA</td>
-                                    <td class="table-sub-title" id="transferVoltaHotel4" colspan="2"> </td>
-                                </tr>
-
-                            </table>
-                    </div>
-                </div>
             </div>
-            
-            <div class="container">
-                <div class="toggle-1">
-                    <a href="#" class="deploy-toggle-1">Hospedagem</a>
-                    <div class="toggle-content">
-                    <table cellspacing='0' class="table">
-                        <tr>
-                            <th colspan="3">Hospedagem:</th>
-                        </tr>
-
-                        <tr>
-                            <td class="table-sub-title" id="idHotel" colspan="3"> Endereço do Hotel em que o participante está hospedado</td>
-                        </tr>
-                        <tr>
-                            <td class="table-sub-title" id="idHotel" colspan="3"> 
-                                <p>
-                                    <strong>Contato:</strong><br>
-                                    <strong>Valéria Octavio</strong> - Coordenadora Access <br>
-                                    Cel: <a href="tel:11 964192341" >(011) 96419-2341</a>
-                                </p>
-                            </td>
-                        </tr>
-
-                    </table>
-                    </div>
-                </div>
-            </div>
-            
-            -->
-        </div>
         <div class="decoration"></div>    
     </div>
 

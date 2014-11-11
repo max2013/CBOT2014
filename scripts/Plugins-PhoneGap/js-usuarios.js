@@ -9,7 +9,7 @@
  var email;
  var nome;
  var url = '';
- 
+  var count;
 var usuarios = {
     
    
@@ -33,7 +33,10 @@ var usuarios = {
     
     handleGetDataParticipante:function()
     {
-         
+        var sql = "select * from tb_participantes";
+        var sql2 = "select * from tb_aereo";
+        var idParticipante;
+        
         if($('#participantesEmail').val().length > 0)
         {
            
@@ -47,17 +50,18 @@ var usuarios = {
                 
                if(data.mensagem !== 'fail')
                {
-                   
-                    sessionStorage.userlogado = 'true';
+                                       
                     $.each(data.mensagem, function(i, index) { 
 
-
+                        idParticipante = index.participantesId;
+                        sessionStorage.userId = idParticipante;
+                        
                         var keyData='';
                         arrDadosCampos = [];
                         arrDadosValues = [];
                         campos = '';
                         values = '';
-
+                        
                         $.each(index, function(key, value)
                         {
                             arrDadosCampos.push(key);
@@ -67,20 +71,83 @@ var usuarios = {
 
                         campos = implode(", ", arrDadosCampos);
                         values = implode(", ", arrDadosValues);
-                        
+                       
                         db.transaction(function(tx) {
                             
-                             antsDb.handleInsert({tabela:'tb_participantes', txDb:tx, field:campos, value:values});
-                             window.location = 'homepage.html';
+                            antsDb.handleInsert({tabela:'tb_participantes', txDb:tx, field:campos, value:values});
+                            
+                            $.post(formURL+'handleListarAereoForParticipantes/id/'+idParticipante, function(data)
+                            {
+                                if(data.mensagem !== 'fail')
+                                {
+                                    count = data.mensagem.length;
+                                    $.each(data.mensagem, function(i, index) { 
+                                        
+                                        arrDadosCampos = [];
+                                        arrDadosValues = [];
+                                        campos = '';
+                                        values = '';
+
+                                        $.each(index, function(key, value)
+                                        {
+                                            arrDadosCampos.push(key);
+                                            arrDadosValues.push('"'+html_entity_decode(value)+'"');
+
+                                        });
+
+                                        
+                                        campos = implode(", ", arrDadosCampos);
+                                        values = implode(", ", arrDadosValues);
+                                        
+                                        if(count >1)handleInsertData(campos, values, true)
+                                        
+                                        else handleInsertData(campos, values, false);
+                                        
+                                        
+                                       
+                                    });
+                                    
+                                    
+                                }
+                               
+                               
+                            },'json');
+                             //
                         });
                        
 
 
                     });
-                                                    
-                                                    
-                  //window.location = 'homepage.html';
-                  //antsDb.handleGetDataServer($('#participantesEmail').val());
+                    
+                    
+                    function handleInsertData(a, b,c)
+                    {
+                        
+                        if(c)
+                        {
+                            db.transaction(function(tx) {
+                                            
+                                antsDb.handleInsert({tabela:'tb_aereo', txDb:tx, field:a, value:b});
+
+                            });
+                            count--;
+                        }
+                        else
+                        {
+                            db.transaction(function(tx) {
+                                            
+                                antsDb.handleInsert({tabela:'tb_aereo', txDb:tx, field:a, value:b});
+
+                            });
+                            
+                            setTimeout(function(){
+                                window.location = 'homepage.html';
+                            },2000)
+                            
+                        }
+                        
+                        //window.location = 'homepage.html';
+                    }
                }
                else
                {
@@ -155,17 +222,17 @@ var usuarios = {
 			
 		}
     },
-    
+   
     handleSelectDadosPageMeusDados:function()
     {
-        db = openDatabase('db_sql0', '1.0', '@usuario', 50 * 1024 * 1024);
+        db = openDatabase('Cbot2014', '1.5', 'ralves_sql', 50 * 1024 * 1024);
         db.transaction(this.handleSelectSuccess, this.handleSelectError);
     },
     handleSelectError:function()
     {
         alert('Houve um erro ao carregar seus dados, por favor se o problema persistir feche e abra o aplicativo novamente.')
     },
-    */
+     */
     
     handleSelectSuccess:function(tx, results)
     {
@@ -179,60 +246,155 @@ var usuarios = {
 				
                         var employee = results.rows.item(i);
                         dadosParticipantesDados.push(
+                                                employee.participantesId,
                                                 employee.participantesNome,
                                                 employee.participantesEmail,
-                                                employee.participantesCidade,
-                                                employee.participantesUf,
-                                                employee.participantesEmitido,
-                                                employee.participantesIdaOrigem,
-                                                employee.participantesIdaDestino,
-                                                employee.participantesIdaData,
-                                                employee.participantesIdaCiaAerea,
-                                                employee.participantesIdaVoo,
-                                                employee.participantesIdaSaida,
-                                                employee.participantesIdaChegada,
-                                                employee.participantesIdaLocalizacao,
-                                                employee.participantesIdaETicket,
-                                                employee.participantesVoltaOrigem,
-                                                employee.participantesVoltaDestino,
-                                                employee.participantesVoltaData,
-                                                employee.participantesVoltaCiaAerea,
-                                                employee.participantesVoltaVoo,
-                                                employee.participantesVoltaSaida,
-                                                employee.participantesVoltaChegada,
-                                                employee.participantesVoltaLocalizacao,
-                                                employee.participantesVoltaETicket,
                                                 employee.participantesStatus
                                                 ); 
                 }
-                
+                id = employee.participantesId;
                 email = employee.participantesEmail;
                 nome = employee.participantesNome;
                 
                 $('#divNomeuser').html(employee.participantesNome);
                 $('#divEmitido').html(employee.participantesEmitido);
                 
-                $('#divOrigem').html(employee.participantesIdaOrigem);
-                $('#divDestino').html(employee.participantesIdaDestino);
-                $('#divData').html(employee.participantesIdaData);
-                $('#divCiaAerea').html(employee.participantesIdaCiaAerea);
-                $('#divVoo').html(employee.participantesIdaVoo);
-                $('#divSaida').html(employee.participantesIdaSaida);
-                $('#divChegada').html(employee.participantesIdaChegada);
-                $('#divLocalizacao').html(employee.participantesIdaLocalizacao);
-                $('#divEticket').html(employee.participantesIdaETicket);
-                
-                //VOLTA//
-                $('#divOrigemVolta').html(employee.participantesVoltaOrigem);
-                $('#divDestinoVolta').html(employee.participantesVoltaDestino);
-                $('#divDataVolta').html(employee.participantesVoltaData);
-                $('#divCiaAereaVolta').html(employee.participantesVoltaCiaAerea);
-                $('#divVooVolta').html(employee.participantesVoltaVoo);
-                $('#divSaidaVolta').html(employee.participantesVoltaSaida);
-                $('#divChegadaVolta').html(employee.participantesVoltaChegada);
-                $('#divLocalizacaoVolta').html(employee.participantesVoltaLocalizacao);
-                $('#divEticketVolta').html(employee.participantesVoltaETicket);
-                
+                var sql = "select * from tb_aereo WHERE aereoParticipantesId="+id;
+                    tx.executeSql(sql, [], getDataAereo);
+        
+            }
+            
+            function getDataAereo(tx, results){
+                var len = results.rows.length;
+                var label = 'SAÍDA';
+               
+                for (var i=0; i<len; i++) {
+                        
+                        if(i === 0) label === 'IDA';
+                        else label = 'Conexão';
+                        var employee = results.rows.item(i);
+                        $('#idToogle').append(
+                                '<div class="toggle-1">'+
+                                    '<div class="deploy-toggle-1" data-id="'+employee.aereoId+'" id="'+employee.aereoId+'">'+label+' - '+employee.aereoIdaData+'</div>'+
+                                    '<div class="toggle-content" id="toggle-content'+employee.aereoId+'">'+
+                                        '<table cellspacing=\'0\' class="table">'+
+                                                   
+                                                '<tr>'+
+                                                    '<td class="table-sub-title" ><strong>Origem:</strong></td>'+
+                                                    '<td colspan="2"><span id="divOrigem">'+employee.aereoIdaOrigem+'</span></td>'+
+                                                '</tr>'+
+
+                                                '<tr>'+
+                                                    '<td class="table-sub-title" > <strong>Destino:</strong></td>'+
+                                                    '<td colspan="2"><span id="divDestino">'+employee.aereoIdaDestino+'</span></td>'+
+                                                '</tr>'+
+
+                                                '<tr>'+
+                                                    '<td class="table-sub-title" > <strong>Data:</strong></td>'+
+                                                    '<td colspan="2"><span id="divData">'+employee.aereoIdaData+'</span></td>'+
+                                                '</tr>'+
+
+                                                '<tr>'+
+                                                    '<td class="table-sub-title" > <strong>Companhia Aérea:</strong></td>'+
+                                                    '<td colspan="2"><span id="divCiaAerea">'+employee.aereoIdaCiaAerea+'</span></td>'+
+                                                '</tr>'+
+
+                                                '<tr>'+
+                                                    '<td class="table-sub-title" > <strong>Vôo:</strong></td>'+
+                                                    '<td colspan="2"><span id="divVoo">'+employee.aereoIdaVoo+'</span></td>'+
+                                                '</tr>'+
+
+                                                '<tr>'+
+                                                    '<td class="table-sub-title" > <strong>Saída:</strong></td>'+
+                                                    '<td colspan="2"><span id="divSaida">'+employee.aereoIdaSaida+'</span></td>'+
+                                                '</tr>'+
+
+                                                '<tr>'+
+                                                    '<td class="table-sub-title" > <strong>Chegada:</strong></td>'+
+                                                    '<td colspan="2"><span id="divChegada">'+employee.aereoIdaChegada+'</span></td>'+
+                                                '</tr>'+
+
+                                                '<tr>'+
+                                                    '<td class="table-sub-title" > <strong>Localização:</strong></td>'+
+                                                    '<td colspan="2"><span id="divLocalizacao">'+employee.aereoIdaLocalizacao+'</span></td>'+
+                                                '</tr>'+
+
+                                                '<tr>'+
+                                                    '<td class="table-sub-title" > <strong>Eticket:</strong></td>'+
+                                                    '<td colspan="2"><span id="divEticket">'+employee.aereoIdaETicket+'</span></td>'+
+                                                '</tr>'+
+
+                                            '</table>'+
+                                    '</div>'+
+                                '</div>');
+                        
+                        $('#idToogle2').append(
+                                '<div class="toggle-1">'+
+                                    '<div class="deploy-toggle-1" data-id="'+(i*100)+'" id="'+(i*100)+'">'+label+' - '+employee.aereoVoltaData+'</div>'+
+                                    '<div class="toggle-content" id="toggle-content'+(i*100)+'">'+
+                                        '<table cellspacing=\'0\' class="table">'+
+                                                   
+                                                '<tr>'+
+                                                    '<td class="table-sub-title" > <strong>Origem:</strong></td>'+
+                                                    '<td colspan="2"><span id="divOrigem">'+employee.aereoVoltaOrigem+'</span></td>'+
+                                                '</tr>'+
+
+                                                '<tr>'+
+                                                    '<td class="table-sub-title" > <strong>Destino:</strong></td>'+
+                                                    '<td colspan="2"><span id="divDestino">'+employee.aereoVoltaDestino+'</span></td>'+
+                                                '</tr>'+
+
+                                                '<tr>'+
+                                                    '<td class="table-sub-title" > <strong>Data:</strong></td>'+
+                                                    '<td colspan="2"><span id="divData">'+employee.aereoVoltaData+'</span></td>'+
+                                                '</tr>'+
+
+                                                '<tr>'+
+                                                    '<td class="table-sub-title" > <strong>Companhia Aérea:</strong></td>'+
+                                                    '<td colspan="2"><span id="divCiaAerea">'+employee.aereoVoltaCiaAerea+'</span></td>'+
+                                                '</tr>'+
+
+                                                '<tr>'+
+                                                    '<td class="table-sub-title" > <strong>Vôo:</strong></td>'+
+                                                    '<td colspan="2"><span id="divVoo">'+employee.aereoVoltaVoo+'</span></td>'+
+                                                '</tr>'+
+
+                                                '<tr>'+
+                                                    '<td class="table-sub-title" > <strong>Saída:</strong></td>'+
+                                                    '<td colspan="2"><span id="divSaida">'+employee.aereoVoltaSaida+'</span></td>'+
+                                                '</tr>'+
+
+                                                '<tr>'+
+                                                    '<td class="table-sub-title" > <strong>Chegada:</strong></td>'+
+                                                    '<td colspan="2"><span id="divChegada">'+employee.aereoVoltaChegada+'</span></td>'+
+                                                '</tr>'+
+
+                                                '<tr>'+
+                                                    '<td class="table-sub-title" > <strong>Localização:</strong></td>'+
+                                                    '<td colspan="2"><span id="divLocalizacao">'+employee.aereoVoltaLocalizacao+'</span></td>'+
+                                                '</tr>'+
+
+                                                '<tr>'+
+                                                    '<td class="table-sub-title" > <strong>Eticket:</strong></td>'+
+                                                    '<td colspan="2"><span id="divEticket">'+employee.aereoVoltaETicket+'</span></td>'+
+                                                '</tr>'+
+
+                                            '</table>'+
+                                    '</div>'+
+                                '</div>');
+                        
+                        
+                        $('#'+employee.aereoId).click(function()
+                        {
+                            $('#toggle-content'+$(this).attr('id')).toggle('slow');
+                        });
+                        
+                        $('#'+(i*100)).click(function()
+                        {
+                            $('#toggle-content'+$(this).attr('id')).toggle('slow');
+                        });
+                        
+                }
             }
     },
     getListUsuarios: function (idItem, container, remove)//itemId, tipo
